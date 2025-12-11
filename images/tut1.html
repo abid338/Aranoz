@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <title>Aranoz</title>
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  overflow-x: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f4f4f4;
+  position: relative;
+  overflow: visible;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  justify-content: center;
+  align-items: center;
+  transition: left 0.3s ease;
+}
+
+.nav-links li {
+  position: relative;
+}
+.nav-links a,
+.dropbtn {
+  text-decoration: none;
+  color: green;
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nav-links a:hover,
+.dropbtn:hover {
+  color: chocolate;
+}
+.dropdown-content {
+  position: absolute;
+  min-width: 160px;
+  background-color: #ff3368;
+  margin-top: 5px;
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 9999;
+  pointer-events: none;
+}
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.dropdown-content a {
+  padding: 12px 16px;
+  display: block;
+  color: black;
+}
+.dropdown-content a:hover {
+  background-color: #ff6690;
+}
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+.nav-icons i {
+  font-size: 18px;
+  cursor: pointer;
+  color: green;
+}
+.nav-icons i:hover {
+  color: chocolate;
+}
+#toggleSearch {
+  display: none;
+}
+.search-input {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 0;
+  opacity: 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: width 0.4s ease, opacity 0.4s ease;
+}
+#toggleSearch:checked ~ .search-input {
+  width: 180px;
+  opacity: 1;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 15;
+}
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: green;
+  transition: 0.3s;
+}
+#menuToggle {
+  display: none;
+}
+
+/* Hero Section */
+.hero-section {
+  background: #e7f9fb;
+  padding: 80px 20px;
+}
+.hero-container {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+.hero-text {
+  max-width: 500px;
+  flex: 1;
+}
+.hero-text h1 {
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: #000;
+}
+.hero-text p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  color: #333;
+}
+.hero-btn {
+  background: linear-gradient(90deg, #ff005a, #ff8a00);
+  padding: 14px 35px;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+.hero-btn:hover {
+  opacity: 0.8;
+}
+.hero-image {
+  flex: 1;
+  max-width: 500px;
+}
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Featured Section */
+.section-title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 800;
+  margin: 60px 0 40px;
+  color: #000;
+}
+.category-container {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding: 0 20px;
+}
+.category-card {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 300px;
+  gap: 20px;
+}
+.card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+}
+.small-title {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+}
+.card-text h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 15px 0;
+  color: #000;
+  line-height: 1.3;
+}
+.card-btn {
+  text-decoration: none;
+  color: #ff0066;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  display: inline-block;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.category-card:hover .card-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.card-img {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-img img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Products Section */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 60px 20px 40px;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.left-part {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.left-part h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+}
+.left-part .shop {
+  font-size: 18px;
+  color: #b3b3b3;
+  font-weight: 600;
+}
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-buttons a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+.nav-buttons .line {
+  color: #aaa;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 0 auto;
+  padding: 0 40px;
+  max-width: 1400px;
+}
+.product-card {
+  width: 100%;
+  padding-bottom: 20px;
+  transition: 0.3s ease;
+}
+.product-img {
+  background: #faf8f6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.product-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.product-info h3 {
+  margin: 15px 0 5px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+.product-info p {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Footer */
+.footer {
+  background-color: #ffffff;
+  padding: 60px 40px 30px;
+  margin: 60px 30px 0;
+}
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-column h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+}
+.footer-column ul {
+  list-style: none;
+}
+.footer-column ul li {
+  margin-bottom: 12px;
+}
+.footer-column ul li a {
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+.footer-column ul li a:hover {
+  color: #333;
+}
+.footer-bottom {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.copyright {
+  color: #888;
+  font-size: 13px;
+}
+.copyright a {
+  color: #ff4b7a;
+  text-decoration: none;
+  font-weight: 600;
+}
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+.social-links a {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.social-links a:hover {
+  color: #ff4b7a;
+}
+
+/* Mobile Responsive - Tablet */
+@media (max-width: 900px) {
+  .navbar {
+    justify-content: space-between;
+    overflow: visible;
+  }
+  .hamburger {
+    display: flex;
+    order: 1;
+    z-index: 1001;
+  }
+  .logo {
+    text-align: center;
+    order: 2;
+  }
+  .nav-icons {
+    order: 3;
+    z-index: 1001;
+  }
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: -100%;
+    width: 100%;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    gap: 10px;
+    padding: 15px 0;
+    z-index: 50;
+  }
+  #menuToggle:checked ~ .nav-links {
+    left: 0;
+  }
+  
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .hero-text {
+    max-width: 100%;
+  }
+  .hero-text h1 {
+    font-size: 45px;
+  }
+  
+  .category-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  .section-header {
+    margin: 40px 20px 30px;
+  }
+  .left-part h1 {
+    font-size: 32px;
+  }
+}
+
+/* Mobile Responsive - Phone */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 12px 15px;
+  }
+  .logo {
+    font-size: 18px;
+  }
+  .nav-icons i {
+    font-size: 16px;
+  }
+  .nav-icons {
+    gap: 10px;
+  }
+  
+  .hero-section {
+    padding: 50px 15px;
+  }
+  .hero-text h1 {
+    font-size: 36px;
+  }
+  .hero-text p {
+    font-size: 14px;
+  }
+  .hero-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    margin: 40px 15px 30px;
+  }
+  
+  .category-container {
+    padding: 0 15px;
+    gap: 20px;
+  }
+  .category-card {
+    flex-direction: column;
+    padding: 25px;
+    min-height: auto;
+    text-align: center;
+  }
+  .card-text {
+    align-items: center;
+    min-height: auto;
+  }
+  .card-text h3 {
+    font-size: 24px;
+  }
+  .card-btn {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 15px;
+  }
+  .card-img {
+    margin-top: 20px;
+  }
+  .card-img img {
+    max-width: 200px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 30px 15px 20px;
+    padding: 0;
+  }
+  .left-part {
+    gap: 10px;
+  }
+  .left-part h1 {
+    font-size: 28px;
+  }
+  .left-part .shop {
+    font-size: 16px;
+  }
+  .nav-buttons {
+    margin-top: 10px;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 0 15px;
+  }
+  .product-info h3 {
+    font-size: 16px;
+  }
+  .product-info p {
+    font-size: 14px;
+  }
+  
+  .footer {
+    padding: 40px 20px 20px;
+    margin: 40px 15px 0;
+  }
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .footer-column h3 {
+    font-size: 16px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  .copyright {
+    font-size: 12px;
+  }
+}
+
+/* Extra Small Phones */
+@media (max-width: 400px) {
+  .hero-text h1 {
+    font-size: 30px;
+  }
+  .category-card {
+    padding: 20px;
+  }
+  .card-text h3 {
+    font-size: 20px;
+  }
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .left-part h1 {
+    font-size: 24px;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <input type="checkbox" id="menuToggle" />
+      <label for="menuToggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <div class="logo">Aranoz</div>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li class="dropdown">
+          <button class="dropbtn">Shop</button>
+          <div class="dropdown-content">
+            <a href="#">Shop category</a>
+            <a href="#">Product details</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <button class="dropbtn">Pages</button>
+          <div class="dropdown-content">
+            <a href="#">Login</a>
+            <a href="#">Tracking</a>
+            <a href="#">Checkout</a>
+            <a href="#">Cart</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <button class="dropbtn">Blog</button>
+          <div class="dropdown-content">
+            <a href="#">Blog</a>
+            <a href="#">Single Blog</a>
+          </div>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-icons">
+        <input type="checkbox" id="toggleSearch" />
+        <label for="toggleSearch"
+          ><i class="fa-solid fa-magnifying-glass"></i
+        ></label>
+        <input type="text" class="search-input" placeholder="Search here" />
+        <i class="fa-regular fa-heart"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+    </nav>
+    
+    <!-- hero section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-text">
+          <h1>Cloth &<br />Wood Sofa</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor harum
+            dolores consectetur iusto. Fuga culpa sint modi voluptatem?
+            Inventore laudantium aliquid nam..
+          </p>
+          <a href="#" class="hero-btn">BUY NOW</a>
+        </div>
+        <div class="hero-image">
+          <img src="hero.png" alt="sofa" />
+        </div>
+      </div>
+    </section>
+    
+    <!-- featured section -->
+    <section class="featured-section">
+      <h2 class="section-title">Featured Category</h2>
+      <div class="category-container">
+        <div class="category-card">
+          <div class="card-text">
+            <span class="small-title">premium Quality</span>
+            <h3>Latest foam sofa</h3>
+            <a href="#" class="card-btn">Explore Now ➜</a>
+          </div>
+          <div class="card-img">
+            <img src="blue_chair.png" alt="chair" />
+          </div>
+        </div>
+        <div class="category-card">
+          <div class="card-text">
+            <span class="small-title">Premium Quality</span>
+            <h3>Latest foam sofa</h3>
+            <a href="#" class="card-btn">Explore Now ➜</a>
+          </div>
+          <div class="card-img">
+            <img src="yellow_chair.png" alt="chair" />
+          </div>
+        </div>
+        <div class="category-card">
+          <div class="card-text">
+            <span class="small-title">Premium Quality</span>
+            <h3>Latest foam sofa</h3>
+            <a href="#" class="card-btn">Explore Now ➜</a>
+          </div>
+          <div class="card-img">
+            <img src="small_sofa.png" alt="sofa" />
+          </div>
+        </div>
+        <div class="category-card">
+          <div class="card-text">
+            <span class="small-title">Premium Quality</span>
+            <h3>Latest foam sofa</h3>
+            <a href="#" class="card-btn">Explore Now ➜</a>
+          </div>
+          <div class="card-img">
+            <img src="double_sofa.png" alt="sofa" />
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- products section -->
+    <div class="section-header">
+      <div class="left-part">
+        <h1>Awesome</h1>
+        <span class="shop">Shop</span>
+      </div>
+      <div class="nav-buttons">
+        <a href="#" class="next">Next</a>
+        <span class="line">|</span>
+        <a href="#" class="previous">Previous</a>
+      </div>
+    </div>
+    
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair1.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair2.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair3.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair4.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair5.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair6.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair7.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="chair8.png" />
+        </div>
+        <div class="product-info">
+          <h3>Quartz Belt Watch</h3>
+          <p>$150.00</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- footer section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Top Products</h3>
+          <ul>
+            <li><a href="#">Managed Website</a></li>
+            <li><a href="#">Manage Reputation</a></li>
+            <li><a href="#">Power Tools</a></li>
+            <li><a href="#">Marketing Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Brand Assets</a></li>
+            <li><a href="#">Investor Relations</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Features</h3>
+          <ul>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Brand Assets</a></li>
+            <li><a href="#">Investor Relations</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Research</a></li>
+            <li><a href="#">Experts</a></li>
+            <li><a href="#">Agencies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">
+          Copyright ©2025 All rights reserved | This template is made with ♥ by
+          <a href="#">Abdullah Abid</a>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
